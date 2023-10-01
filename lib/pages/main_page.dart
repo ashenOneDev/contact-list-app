@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:contactlistapp/model/person_model.dart';
 import 'package:contactlistapp/repositories/person_hive_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'person_detail_page.dart';
@@ -41,6 +42,117 @@ class _MainPageState extends State<MainPage> {
         child: Scaffold(
       appBar: AppBar(
         title: const Text("Lista de Contatos"),
+        actions: [
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext context) {
+              return <PopupMenuEntry<String>>[
+                PopupMenuItem<String>(
+                  value: 'item1',
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.settings,
+                        color: Colors.blue,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text('Configurações'),
+                    ],
+                  ),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext bc) {
+                          return AlertDialog(
+                            alignment: Alignment.centerLeft,
+                            elevation: 8,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            title: const Text(
+                              "Implementação Futura",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            content: const Wrap(
+                              children: [
+                                Text("Em desenvolvimento!"),
+                              ],
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.red)),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Fechar")),
+                            ],
+                          );
+                        });
+                  },
+                ),
+                PopupMenuItem<String>(
+                  value: 'item2',
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.exit_to_app,
+                        color: Colors.blue,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text("Sair"),
+                    ],
+                  ),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext bc) {
+                          return AlertDialog(
+                            alignment: Alignment.centerLeft,
+                            elevation: 8,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            title: const Text(
+                              "Lista de Contatos",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            content: const Wrap(
+                              children: [
+                                Text("Deseja realmente sair?"),
+                              ],
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.green)),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Não")),
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.red)),
+                                  onPressed: () {
+                                    SystemNavigator.pop();
+                                  },
+                                  child: const Text("Sim")),
+                            ],
+                          );
+                        });
+                  },
+                ),
+              ];
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
           child: const FaIcon(FontAwesomeIcons.plus),
